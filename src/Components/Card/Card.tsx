@@ -10,12 +10,17 @@ export interface ICardProps {
 
 export default class Card extends React.Component<ICardProps> {
   public render() {
-    const { image, index,isFlipped,onFlip } = this.props;
+    const { image, index, isFlipped, onFlip } = this.props;
 
     return (
-      <div onClick={() =>{onFlip(index)}} >
-      
-        <img style={{ width: "200px", height: "280px" }} src={isFlipped ? image : "/card-back.png" }  />
+      <div onClick={() => {
+        if (!isFlipped) {
+          onFlip(index)
+        }
+
+      }}>
+
+        <img style={{ width: "200px", height: "280px" }} src={isFlipped ? image : "/card-back.png"} />
 
       </div>
     );
