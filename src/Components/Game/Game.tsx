@@ -24,8 +24,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     ],
 
     flippedCards: {
-      0: true,
-      2: true,
+     
     },
 
     currentFlippedCards: [],
@@ -42,10 +41,13 @@ export default class Game extends React.Component<IGameProps, IGameState> {
         {
           stack.map((url, index) =>
             <Card
-            key={index}
-            index={index}
-            image={url}
+              key={index}
+              index={index}
+              image={url}
               onFlip={(index) => {
+                if (currentFlippedCards.length >= 2) {
+                  return;
+                }
                 if (currentFlippedCards.length === 0) {
                   this.setState({
                     currentFlippedCards: currentFlippedCards.concat(index)
@@ -56,12 +58,26 @@ export default class Game extends React.Component<IGameProps, IGameState> {
                   const secondCard = stack[index];
                   if (firstCard === secondCard) {
                     this.setState({
-                      flippedCards
+                      flippedCards: {
+                        ...flippedCards,
+                        [firstCardIndex]: true,
+                        [index]: true,
+                      },
+                      currentFlippedCards: []
                     })
+                  } else {
+                    this.setState({
+                      currentFlippedCards: currentFlippedCards.concat(index)
+                    });
+                    setTimeout(() => {
+                      this.setState({
+                        currentFlippedCards: []
+                            })                            
+                    }, 3000);
                   }
                 }
-            }}
-            isFlipped={flippedCards[index] || currentFlippedCards.includes(index)} />)
+              }}
+              isFlipped={flippedCards[index] || currentFlippedCards.includes(index)} />)
         }
       </div>
     );
