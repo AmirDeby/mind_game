@@ -1,7 +1,31 @@
+
 .game {
+  margin: 24px;
+}
+.points {
+  margin-bottom: 24px;
+}
+.cards {
   max-width: 900px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+   margin-bottom: 24px;
 }
+
+.game-over {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 20px;
+  color: #fff;
+}
+
+
