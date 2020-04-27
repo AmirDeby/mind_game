@@ -30,12 +30,19 @@ const images = [
 const cards = images.reduce((cards: string[], image: string) => cards.concat([image, image]), []);
 
 export default class Game extends React.Component<IGameProps, IGameState> {
+
+  componentDidMount() {
+    const currentPlayer = Math.floor(Math.random() * this.state.players.length);
+    this.setState({ currentPlayer });
+  }
   state: IGameState = {
     players: [{
+      name: "אופיר",
       id: 1,
       points: 0
     },
     {
+      name: "אורי",
       id: 2,
       points: 0
     }
@@ -47,7 +54,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   }
 
   public render() {
-    const { stack, flippedCards, currentFlippedCards, currentPlayer } = this.state;
+    const { stack, flippedCards, currentFlippedCards, currentPlayer, players } = this.state;
     const numOfFlippedCards = Object.keys(flippedCards).length;
     const finishGame = numOfFlippedCards === stack.length;
 
@@ -56,7 +63,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
         {finishGame ? <div className="game-over" >Game Over</div> : null}
         <p className="points">
         </p>
-        <p>now playing : {currentPlayer}</p>
+        <p>now playing : {players[currentPlayer].name}</p>
+        <div><u>player points </u> : {players[currentPlayer].points}</div>
         <div className="cards">
           {
             stack.map((url, index) =>
@@ -73,7 +81,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   }
 
   handleOnFlip = (index: number) => {
-    const { currentFlippedCards, stack, flippedCards } = this.state;
+    const { currentFlippedCards, stack, flippedCards, players, currentPlayer } = this.state;
     if (currentFlippedCards.length >= 2) {
       return;
     }
@@ -86,7 +94,21 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       const firstCard = stack[firstCardIndex];
       const secondCard = stack[index];
       if (firstCard === secondCard) {
+        const copyPlayers = players.concat()
+        const singlePlayer = players[currentPlayer];
+        const addPoints = players[currentPlayer] = {
+          ...singlePlayer,
+          points: players[currentPlayer].points + 1
+        }
+        copyPlayers[currentPlayer] = {
+          ...singlePlayer,
+          ...addPoints
+        }
+        console.log(addPoints);
+        console.log(copyPlayers);
+
         this.setState({
+          players: copyPlayers,
           flippedCards: {
             // we create a new version of flippedCards,
             // which has ALL the keys and values of the old flippedCards
