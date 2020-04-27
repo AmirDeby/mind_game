@@ -5,7 +5,6 @@ export interface ICardProps {
   image: string;
   onFlip(index: number): void;
   isFlipped: boolean;
-
 }
 
 export default class Card extends React.Component<ICardProps> {
@@ -13,15 +12,12 @@ export default class Card extends React.Component<ICardProps> {
     const { image, index, isFlipped, onFlip } = this.props;
 
     return (
-      <div onClick={() => {
+      <div style={{ margin: '8px' }} onClick={() => {
         if (!isFlipped) {
           onFlip(index)
         }
-
       }}>
-
-        <img style={{ width: "200px", height: "280px" }} src={isFlipped ? image : "/card-back.png"} />
-
+        <img style={{ width: "100px", height: "180px" }} src={isFlipped ? image : "/card-back.png"} />
       </div>
     );
   }

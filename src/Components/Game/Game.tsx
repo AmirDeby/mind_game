@@ -2,55 +2,61 @@ import * as React from 'react';
 import Card from '../Card/Card';
 import "../Game/Game.css";
 import shuffle from 'lodash.shuffle';
-
+import { IPlayer } from '../../players';
 
 export interface IGameProps {
 }
 
 interface IGameState {
+  players: IPlayer[],
   stack: string[];
   flippedCards: any;
   currentFlippedCards: number[];
-  points: any;
+  currentPlayer: number,
 }
 
 const images = [
-  'https://picsum.photos/id/1010/5184/3456',
+  'https://picsum.photos/id/133/200/300?grayscale',
   'https://picsum.photos/id/1003/1181/1772',
   'https://picsum.photos/id/237/200/300',
   'https://picsum.photos/id/1004/1181/1772',
   'https://picsum.photos/id/1006/1181/1772',
   'https://picsum.photos/id/1005/1181/1772',
+  'https://picsum.photos/id/1009/1181/1772',
+  'https://picsum.photos/id/1011/1181/1772',
+
 ];
 
 const cards = images.reduce((cards: string[], image: string) => cards.concat([image, image]), []);
 
 export default class Game extends React.Component<IGameProps, IGameState> {
   state: IGameState = {
-
+    players: [{
+      id: 1,
+      points: 0
+    },
+    {
+      id: 2,
+      points: 0
+    }
+    ],
+    currentPlayer: 0,
     stack: shuffle(cards),
-
     flippedCards: {},
-
     currentFlippedCards: [],
-
-    points: 0,
-
   }
 
-
-
   public render() {
-    const { stack, flippedCards, currentFlippedCards, points } = this.state;
-    const finishGame = points * 2 === stack.length;
+    const { stack, flippedCards, currentFlippedCards, currentPlayer } = this.state;
+    const numOfFlippedCards = Object.keys(flippedCards).length;
+    const finishGame = numOfFlippedCards === stack.length;
 
     return (
-
       <div className="game" >
         {finishGame ? <div className="game-over" >Game Over</div> : null}
         <p className="points">
-          <b>{"Points : "}</b> {points}
         </p>
+        <p>now playing : {currentPlayer}</p>
         <div className="cards">
           {
             stack.map((url, index) =>
@@ -67,7 +73,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
   }
 
   handleOnFlip = (index: number) => {
-    const { currentFlippedCards, stack, flippedCards, points } = this.state;
+    const { currentFlippedCards, stack, flippedCards } = this.state;
     if (currentFlippedCards.length >= 2) {
       return;
     }
@@ -85,17 +91,13 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             // we create a new version of flippedCards,
             // which has ALL the keys and values of the old flippedCards
             //  but we also add 2 more keys, which are the indexes of the 2 cards we've just flipped
-
             // we use spread (...) to copy all of the old keys and values
             ...flippedCards,
             // we use [firstCardIndex] to use firstCardIndex's *value* as a key name
             [firstCardIndex]: true,
             [index]: true,
-
           },
           currentFlippedCards: [],
-
-          points: points + 1,
         })
 
       } else {
@@ -109,7 +111,8 @@ export default class Game extends React.Component<IGameProps, IGameState> {
             // before flipping them back
             setTimeout(() => {
               this.setState({
-                currentFlippedCards: []
+                currentFlippedCards: [],
+                currentPlayer: (this.state.currentPlayer + 1) % this.state.players.length,
               })
             }, 1500);
           });
