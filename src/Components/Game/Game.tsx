@@ -3,6 +3,7 @@ import { Store } from '../../store'
 import Card from '../Card/Card';
 import "../Game/Game.css";
 import { IPlayer } from '../../players';
+import { Redirect } from 'react-router';
 
 
 export interface IGameProps {
@@ -16,7 +17,6 @@ interface IGameState {
   currentFlippedCards: number[];
   currentPlayer: number,
 }
-
 
 export default class Game extends React.Component<IGameProps, IGameState> {
   static contextType = Store;
@@ -45,7 +45,9 @@ export default class Game extends React.Component<IGameProps, IGameState> {
           </td>
         </tr>
       </table>)
-
+    if (!players.length) {
+      return <Redirect to="/" />
+    }
     return (
       <div className="game" >
         {finishGame ? <div className="game-over" >{gameStatus}</div> : null}

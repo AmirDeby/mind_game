@@ -22,7 +22,7 @@ class _Names extends React.Component<NameProps, INamesState> {
     public render() {
         return (
             <div style={{ width: "20%", margin: "auto" }}>
-                <h2 style={{ margin: "9px" }}><u>My Mind Game</u></h2>
+                <h2 style={{ margin: "9px" }}><u>משחק הזיכרון</u></h2>
                 <Form onSubmit={this.onSubmit}>
                     <Form.Group>
                         <Form.Control
@@ -30,16 +30,16 @@ class _Names extends React.Component<NameProps, INamesState> {
                             style={{ margin: "5px" }}
                             name="playerOne" size="sm"
                             type="text"
-                            placeholder="Enter Player 1 name" />
+                            placeholder="הכנס שם של שחקן מספר 1" />
                         <Form.Control
                             onChange={this.onChangehandlerName}
                             style={{ margin: "5px" }}
                             name="playerTwo"
                             size="sm"
                             type="text"
-                            placeholder="Enter Player 2 name" />
+                            placeholder="הכנס שם של שחקן מספר 2" />
                     </Form.Group>
-                    <Button type="submit" size="sm" variant="outline-dark" >Submit</Button>
+                    <Button type="submit" size="sm" variant="outline-dark" >המשך למשחק</Button>
                 </Form>
             </div>
         );
