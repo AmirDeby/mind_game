@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { PureComponent } from "react";
 
 export interface ICardProps {
   index: number;
@@ -7,7 +7,7 @@ export interface ICardProps {
   isFlipped: boolean;
 }
 
-export default class Card extends React.Component<ICardProps> {
+export default class Card extends PureComponent<ICardProps> {
   public render() {
     const { image, index, isFlipped, onFlip } = this.props;
     return (

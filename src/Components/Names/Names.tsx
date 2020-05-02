@@ -39,7 +39,10 @@ class _Names extends React.Component<NameProps, INamesState> {
                             type="text"
                             placeholder="הכנס שם של שחקן מספר 2" />
                     </Form.Group>
-                    <Button type="submit" size="sm" variant="outline-dark" >המשך למשחק</Button>
+                    <Button type="submit" size="sm" variant="outline-dark" >הוסף שחקן</Button>
+                    <div style={{ margin: "10px" }}>
+                        <Button onClick={this.onContinueHandle} type="submit" size="sm" variant="outline-warning" >המשך למשחק</Button>
+                    </div>
                 </Form>
             </div>
         );
@@ -47,28 +50,35 @@ class _Names extends React.Component<NameProps, INamesState> {
     onChangehandlerName = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
         this.setState({ [name]: value } as any);
-        // console.log(this.state);
+        console.log(this.state);
+    }
+    onContinueHandle = () => {
+        const { history } = this.props;
+        const { playerOne, playerTwo } = this.state
+        if (!playerOne || !playerTwo) {
+            return alert('חובה להכניס שמות שחקנים');
+        }
+        history.push('/game');
     }
     onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const { playerOne, playerTwo } = this.state;
-        const { history } = this.props;
 
         const newPlayerOne = {
             name: playerOne,
-            id: 1,
+            id: Math.random() * 999999,
             points: 0
         }
         const newPlayerTwo = {
             name: playerTwo,
-            id: 2,
+            id: Math.random() * 999999,
             points: 0
         }
         this.context.setState({
             players: [newPlayerOne, newPlayerTwo]
         })
-
-        history.push('/game');
+        console.log(newPlayerTwo);
+        
     }
 }
 

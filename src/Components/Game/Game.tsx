@@ -4,6 +4,7 @@ import Card from '../Card/Card';
 import "../Game/Game.css";
 import { IPlayer } from '../../players';
 import { Redirect } from 'react-router';
+import GameStatus from '../GameStatus/GameStatus';
 
 
 export interface IGameProps {
@@ -28,33 +29,22 @@ export default class Game extends React.Component<IGameProps, IGameState> {
 
   public render() {
     const { stack, flippedCards, currentFlippedCards, currentPlayer, players } = this.context.state;
-    const numOfFlippedCards = Object.keys(flippedCards).length;
-    const finishGame = numOfFlippedCards === stack.length;
-    const gameStatus = players.map((player: any) =>
-      <table style={{ border: "solid 3px white", margin: "5px" }} key={player.id}>
-        <tr>
-          <th style={{ border: "solid 3px white", margin: "2px", padding: "5px" }}>נקודות</th>
-          <th style={{ margin: "3px", padding: "5px" }}>שם השחקן</th>
-        </tr>
-        <tr style={{ border: "solid 3px white", margin: "2px" }}>
-          <td style={{ border: "solid 2px white", margin: "5px" }}>
-            {player.points}
-          </td>
-          <td>
-            {player.name}
-          </td>
-        </tr>
-      </table>)
     if (!players.length) {
       return <Redirect to="/" />
     }
+    const numOfFlippedCards = Object.keys(flippedCards).length;
+    const finishGame = numOfFlippedCards === stack.length;
+    const theWinner = this.winner(players);
+    // console.log(theWinner);
     return (
-      <div className="game" >
-        {finishGame ? <div className="game-over" >{gameStatus}</div> : null}
+      <div className="game">
+        {finishGame ? <div className="game-over" >המנצח הוא : {theWinner}</div> : null}
         <p className="points">
         </p>
-        <p>עכשיו משחק : {players[currentPlayer].name}</p>
-        <div><u>מספר נקודות </u> : {players[currentPlayer].points}</div>
+        <p><b><u>עכשיו משחק : {players[currentPlayer].name}</u></b></p>
+        <hr></hr>
+        <span style={{ margin: "auto" }} ><GameStatus /></span>
+        <hr></hr>
         <div className="cards">
           {
             stack.map((url: any, index: any) =>
@@ -69,7 +59,13 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       </div>
     );
   }
-
+  winner = (players: any) => {
+    if (players[0].points > players[1].points) {
+      return players[0].name
+    } else {
+      return players[1].name
+    }
+  }
   handleOnFlip = (index: number) => {
     const { currentFlippedCards, stack, flippedCards, players, currentPlayer } = this.context.state;
     if (currentFlippedCards.length >= 2) {
@@ -94,9 +90,6 @@ export default class Game extends React.Component<IGameProps, IGameState> {
           ...singlePlayer,
           ...addPoints
         }
-        console.log(addPoints);
-        console.log(copyPlayers);
-
         this.context.setState({
           players: copyPlayers,
           flippedCards: {
