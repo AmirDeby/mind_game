@@ -38,7 +38,7 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     // console.log(theWinner);
     return (
       <div className="game">
-        {finishGame ? <div className="game-over" >המנצח הוא : {theWinner}</div> : null}
+        {finishGame ? <div className="game-over" >{theWinner}</div> : null}
         <p className="points">
         </p>
         <p><b><u>עכשיו משחק : {players[currentPlayer].name}</u></b></p>
@@ -60,10 +60,16 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     );
   }
   winner = (players: any) => {
+    if (players.length === 0) {
+      return <Redirect to='/'/>
+    }
+    if (players[0].points === players[1].points) {
+      return "Draw-תיקו"
+    }
     if (players[0].points > players[1].points) {
-      return players[0].name
+      return `The winner is : ${players[0].name}`
     } else {
-      return players[1].name
+      return `The winner is : ${players[1].name}`
     }
   }
   handleOnFlip = (index: number) => {
