@@ -44,7 +44,7 @@ class _Names extends React.Component<NameProps, INamesState> {
     onChangehandlerName = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
         this.setState({ [name]: value } as any);
-        console.log(this.state);
+        // console.log(this.state);
     }
     onContinueHandle = () => {
         const { history } = this.props;
@@ -67,7 +67,7 @@ class _Names extends React.Component<NameProps, INamesState> {
         this.context.setState({
             players
         })
-        console.log(players);
+        // console.log(players);
     }
 }
 

@@ -5,6 +5,8 @@ import "../Game/Game.css";
 import { IPlayer } from '../../players';
 import { Redirect } from 'react-router';
 import GameStatus from '../GameStatus/GameStatus';
+import _ from 'lodash';
+import { maxBy } from 'lodash';
 
 
 export interface IGameProps {
@@ -35,10 +37,9 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     const numOfFlippedCards = Object.keys(flippedCards).length;
     const finishGame = numOfFlippedCards === stack.length;
     const theWinner = this.winner(players);
-    // console.log(theWinner);
     return (
       <div className="game">
-        {finishGame ? <div className="game-over" >{theWinner}</div> : null}
+        {finishGame ? <div className="game-over" >{`The Winner is : ${theWinner.name}`}</div> : null}
         <p className="points">
         </p>
         <p><b><u>עכשיו משחק : {players[currentPlayer].name}</u></b></p>
@@ -60,17 +61,10 @@ export default class Game extends React.Component<IGameProps, IGameState> {
     );
   }
   winner = (players: any) => {
-    if (players.length === 0) {
-      return <Redirect to='/'/>
-    }
-    if (players[0].points === players[1].points) {
-      return "Draw-תיקו"
-    }
-    if (players[0].points > players[1].points) {
-      return `The winner is : ${players[0].name}`
-    } else {
-      return `The winner is : ${players[1].name}`
-    }
+   const winner = maxBy(players, (player: any) => {
+      return player.points
+   });
+     return winner;
   }
   handleOnFlip = (index: number) => {
     const { currentFlippedCards, stack, flippedCards, players, currentPlayer } = this.context.state;

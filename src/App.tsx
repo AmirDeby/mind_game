@@ -10,14 +10,14 @@ import { IAppState, Store } from './store';
 const images = [
   'https://picsum.photos/id/133/200/300?',
   'https://picsum.photos/id/1003/1181/1772',
-  'https://picsum.photos/id/237/200/300',
-  'https://picsum.photos/id/1004/1181/1772',
-  'https://picsum.photos/id/1006/1181/1772',
-  'https://picsum.photos/id/1005/1181/1772',
-  'https://picsum.photos/id/1009/1181/1772',
-  'https://picsum.photos/id/1011/1181/1772',
-  'https://picsum.photos/id/1016/1181/1772',
-  'https://picsum.photos/id/1020/1181/1772',
+  // 'https://picsum.photos/id/237/200/300',
+  // 'https://picsum.photos/id/1004/1181/1772',
+  // 'https://picsum.photos/id/1006/1181/1772',
+  // 'https://picsum.photos/id/1005/1181/1772',
+  // 'https://picsum.photos/id/1009/1181/1772',
+  // 'https://picsum.photos/id/1011/1181/1772',
+  // 'https://picsum.photos/id/1016/1181/1772',
+  // 'https://picsum.photos/id/1020/1181/1772',
 ];
 
 const cards = images.reduce((cards: string[], image: string) => cards.concat([image, image]), []);
