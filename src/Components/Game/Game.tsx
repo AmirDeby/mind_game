@@ -1,12 +1,11 @@
+import { maxBy } from 'lodash';
 import * as React from 'react';
-import { Store } from '../../store'
+import { Redirect } from 'react-router';
+import { IPlayer } from '../../players';
+import { Store } from '../../store';
 import Card from '../Card/Card';
 import "../Game/Game.css";
-import { IPlayer } from '../../players';
-import { Redirect } from 'react-router';
 import GameStatus from '../GameStatus/GameStatus';
-import _ from 'lodash';
-import { maxBy } from 'lodash';
 
 
 export interface IGameProps {

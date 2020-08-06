@@ -19,7 +19,6 @@ class _Names extends React.Component<NameProps, INamesState> {
         newPlayer: "",
     }
     public render() {
-
         return (
             <div className="row" style={{ width: "20%", margin: "auto" }}>
                 <h1 style={{ margin: "12px" }}><u>משחק הזיכרון</u></h1>
@@ -28,6 +27,7 @@ class _Names extends React.Component<NameProps, INamesState> {
                         <Form.Control
                             onChange={this.onChangehandlerName}
                             style={{ margin: "5px" }}
+                            value={this.state.newPlayer}
                             name="newPlayer" size="sm"
                             type="text"
                             placeholder="הכנס שם של שחקן" />
@@ -66,8 +66,11 @@ class _Names extends React.Component<NameProps, INamesState> {
         })
         this.context.setState({
             players
+        });
+        this.setState({
+            newPlayer: ""
         })
-        // console.log(players);
+        console.log(newPlayer);
     }
 }
 
